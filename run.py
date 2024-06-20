@@ -1,37 +1,50 @@
-import gspread
-from google.oauth2.service_account import Credentials
+# import gspread
+# from google.oauth2.service_account import Credentials
 
-SCOPE = [
-    "https://www.googleapis.com/auth/spreadsheets",
-    "https://www.googleapis.com/auth/drive.file",
-    "https://www.googleapis.com/auth/drive"
-    ]
+# SCOPE = [
+#     "https://www.googleapis.com/auth/spreadsheets",
+#     "https://www.googleapis.com/auth/drive.file",
+#     "https://www.googleapis.com/auth/drive"
+#     ]
 
-CREDS = Credentials.from_service_account_file('creds.json')
-SCOPED_CREDS = CREDS.with_scopes(SCOPE)
-GSPRED_CLIENT = gspred.authorize(SCOPED_CREDS)
-SHEET -GSPRED_CLIENT.open('love_sandwidges')
+# CREDS = Credentials.from_service_account_file('creds.json')
+# SCOPED_CREDS = CREDS.with_scopes(SCOPE)
+# GSPRED_CLIENT = gspread.authorize(SCOPED_CREDS)
+# SHEET = GSPRED_CLIENT.open('love_sandwiches')
 
-sales = SHEET.worksheet('sales')
+# sales = SHEET.worksheet('sales')
 
-data = sales.get_all_values()
+# data = sales.get_all_values()
 
-print(data)
+# print(data)
 
-# import os
-# from flask import Flask
+def get_sales_data():
+    """
+    Get sales data
+    """
+    print("Please enter sales data from the last market")
+    print("Data should ne six numbers, seperated by commas.")
+    print("example: 10,20,30,40,50,60\n")
 
-# app = Flask(__name__)
+    data_str = input("Enter your data here: ")
 
-# @app.route("/")
-# def index():
-#     #return '<h1>'Hello, World'<,h1>'
-#     return render_template('index.html')
+    sales_data = data_str.split(",")
+    validate_data(sales_data)
 
+def validate_data(values):
+    """"
+    Inside the try, converts all string values into integers.
+    Raises ValueError if strings cannot be converted into int,
+    or if there arn't exactly 6 values.
+    """
+    try:
+        if len(values) != 6:
+            raise ValueError(
+                f"Exactly 6 values required, you provided {len(values)}"
+            )
+    except ValueError as e:
+        print(f"Invalid data: {e}, please try again.\n")
 
-# if __name__ == '__main__':
-#     app.run(
-#         host=os.environ.get("IP", "0.0.0.0"),
-#         port=int(os.environ.get("PORT", 5000)),
-#         debug=True #change this to False
-#     )
+    print(values)
+get_sales_data()
+    
